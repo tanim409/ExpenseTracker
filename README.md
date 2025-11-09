@@ -1,5 +1,5 @@
 # Expense Tracker API............
-A simple REST API to track your daily expenses. Built with Spring Boot and MySQL.
+A simple REST API to track daily expenses. Built with Spring Boot and MySQL.
 
 # What does it do ?
 
