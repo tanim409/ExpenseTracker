@@ -2,10 +2,10 @@
 A simple REST API to track daily expenses. Built with Spring Boot and MySQL.
 
 # What does it do ?
-1.Create an account and login securely.
-2.Add categories (like Food, Transport, HealthCare).
-3.Track expenses with date and amount.
-4.View all expenses anytime.
+1. Create an account and login securely.
+2. Add categories (like Food, Transport, HealthCare).
+3. Track expenses with date and amount.
+4. View all expenses anytime.
 
 # Tech i used
 1. Java 21
