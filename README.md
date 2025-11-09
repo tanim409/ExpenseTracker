@@ -9,32 +9,32 @@ A simple REST API to track your daily expenses. Built with Spring Boot and MySQL
 4.View all expenses anytime
 
 # Tech i used
--> Java 21
--> Spring Boot
--> MySQL
--> JWT for auth
--> Maven
+1. Java 21
+2. Spring Boot
+3. MySQL
+4. JWT for auth
+5. Maven
 
 # Project Structure
 src/main/java/
--> controller/     (handles requests)
--> service/        (business logic)
--> repository/     (database queries)
--> entities/       (database tables)
--> dto/            (request/response objects)
--> security/       (JWT and auth stuff)
+1. controller/     (handles requests)
+2. service/        (business logic)
+3. repository/     (database queries)
+4. entities/       (database tables)
+5. dto/            (request/response objects)
+6. security/       (JWT and auth stuff)
 
 # Other useful endpoints:
--> GET /api/expense - See all expenses
--> GET /api/category/get - See all categories
--> PUT /api/expense/update/{categoryId} - Update an expense
--> DELETE /api/expense/delete/{categoryId} - Delete an expense
+1. GET /api/expense - See all expenses
+2. GET /api/category/get - See all categories
+3. PUT /api/expense/update/{categoryId} - Update an expense
+4. DELETE /api/expense/delete/{categoryId} - Delete an expense
 
 # Database tables
 The app creates 3 tables....
--> users - stores user accounts
--> categories - expense categories
--> expenses - all expense records with amount and date
+1. users - stores user accounts
+2. categories - expense categories
+3. expenses - all expense records with amount and date
 
 # Things i learned
 JWT authentication is tricky but powerful.Always use DTOs to avoid circular reference errors.
