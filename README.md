@@ -1,6 +1,9 @@
 # Expense Tracker API............
 A simple REST API to track daily expenses. Built with Spring Boot and MySQL.
 
+# Project URL
+https://github.com/tanim409/ExpenseTracker.git
+
 # What does it do ?
 1. Create an account and login securely.
 2. Add categories (like Food, Transport, HealthCare).
