@@ -2,7 +2,7 @@
 A simple REST API to track daily expenses. Built with Spring Boot and MySQL.
 
 # Project URL
-https://github.com/tanim409/ExpenseTracker
+https://roadmap.sh/projects/expense-tracker
 
 # What does it do ?
 1. Create an account and login securely.
