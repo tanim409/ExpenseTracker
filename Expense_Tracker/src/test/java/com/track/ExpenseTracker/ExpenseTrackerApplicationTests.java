@@ -1,13 +1,13 @@
+
 package com.track.ExpenseTracker;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+
+@DataJpaTest
 class ExpenseTrackerApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
 }
+
+

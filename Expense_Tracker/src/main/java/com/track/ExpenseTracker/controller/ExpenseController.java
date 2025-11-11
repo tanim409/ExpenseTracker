@@ -48,7 +48,7 @@ public class ExpenseController {
                                                                              @RequestParam(defaultValue = "10") int size,
                                                                              @RequestParam(defaultValue = "expenseDate") String sortBy) {
         User user = customUserDetails.getUser();
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         Page<ExpenseResponse> expense = expenseService.getAllExpenses(user, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(true, "get all successfully", expense));
     }
@@ -60,16 +60,15 @@ public class ExpenseController {
                                                                                    @RequestParam(defaultValue = "10") int size,
                                                                                    @RequestParam(defaultValue = "expenseDate") String sortBy) {
         User user = customUserDetails.getUser();
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        Page<ExpenseResponse> expense = expenseService.getExpenseByCategory(customUserDetails, categoryId, pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        Page<ExpenseResponse> expense = expenseService.getExpenseByCategory(user, categoryId, pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "get all successfully", expense));
     }
 
     @GetMapping("/Date-Range")
     public ResponseEntity<ApiResponse<Page<ExpenseResponse>>> getExpenseByDateRange(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-                                                                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
-    ) {
+                                                                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
         User user = customUserDetails.getUser();
         Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "expenseDate"));
         Page<ExpenseResponse> expense = expenseService.expenseDateRange(user, fromDate, toDate, pageable);

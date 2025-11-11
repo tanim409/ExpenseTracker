@@ -46,27 +46,13 @@ public class ExpenseService {
         return modToResponse(exp);
     }
 
-    private ExpenseResponse modToResponse(Expense exp) {
-
-        ExpenseResponse expenseResponse = new ExpenseResponse();
-        expenseResponse.setExpenseDate(exp.getExpenseDate());
-        expenseResponse.setAmount(exp.getAmount());
-        expenseResponse.setDescription(exp.getDescription());
-        expenseResponse.setCategory(exp.getCategory());
-        expenseResponse.setExpenseId(exp.getId());
-        expenseResponse.setCreatedDate(exp.getCreatedAt());
-        expenseResponse.setUpdatedDate(exp.getUpdatedAt());
-
-        return expenseResponse;
-    }
-
     public Page<ExpenseResponse> getAllExpenses(User user, Pageable pageable) {
         Page<Expense> expenses = expenseRepo.findByUserId(user.getId(), pageable);
         return expenses.map(this::modToResponse);
     }
 
-    public Page<ExpenseResponse> getExpenseByCategory(CustomUserDetails customUserDetails, int categoryId, Pageable pageable) {
-        Integer userId = customUserDetails.getUser().getId();
+    public Page<ExpenseResponse> getExpenseByCategory(User user, int categoryId, Pageable pageable) {
+        Integer userId =user.getId();
         Page<Expense> expensesByCategory = expenseRepo.findByUserIdAndCategoryId(userId, categoryId, pageable);
         return expensesByCategory.map(this::modToResponse);
     }
@@ -103,4 +89,19 @@ public class ExpenseService {
     public BigDecimal sumOfExpense(User user) {
         return expenseRepo.sumExpenseByUser(user);
     }
+
+    private ExpenseResponse modToResponse(Expense exp) {
+
+        ExpenseResponse expenseResponse = new ExpenseResponse();
+        expenseResponse.setExpenseDate(exp.getExpenseDate());
+        expenseResponse.setAmount(exp.getAmount());
+        expenseResponse.setDescription(exp.getDescription());
+        expenseResponse.setCategory(exp.getCategory());
+        expenseResponse.setExpenseId(exp.getId());
+        expenseResponse.setCreatedDate(exp.getCreatedAt());
+        expenseResponse.setUpdatedDate(exp.getUpdatedAt());
+
+        return expenseResponse;
+    }
+
 }
