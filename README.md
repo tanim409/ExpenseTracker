@@ -2,7 +2,7 @@
 A simple REST API to track daily expenses. Built with Spring Boot and MySQL.
 
 # Project URL
-https://roadmap.sh/projects/expense-tracker
+https://roadmap.sh/projects/expense-tracker-api
 
 # What does it do ?
 1. Create an account and login securely.
