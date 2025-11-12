@@ -2,6 +2,8 @@ package com.track.ExpenseTracker.service;
 
 import com.track.ExpenseTracker.DTO.ExpenseRequest;
 import com.track.ExpenseTracker.DTO.ExpenseResponse;
+import com.track.ExpenseTracker.Exception.ResourceNotFoundException;
+import com.track.ExpenseTracker.Exception.UnauthorizeException;
 import com.track.ExpenseTracker.entities.Category;
 import com.track.ExpenseTracker.entities.Expense;
 
@@ -37,9 +39,13 @@ public class ExpenseService {
         expense.setDescription(expenseRequest.getDescription());
         expense.setExpenseDate(expenseRequest.getExpenseDate());
         if (expenseRequest.getCategoryId() != null) {
-            Category category = categoryRepo.findById(expenseRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+            Category category =
+                    categoryRepo.findById(expenseRequest.getCategoryId())
+                            .orElseThrow(() -> new ResourceNotFoundException("category not found with id " + expenseRequest.getCategoryId()));
             if (category.getUser().getId().equals(user.getId())) {
                 expense.setCategory(category);
+            }else{
+                throw new UnauthorizeException("category id not valid");
             }
         }
         Expense exp = expenseRepo.save(expense);
@@ -69,7 +75,9 @@ public class ExpenseService {
         expense.setDescription(expenseRequest.getDescription());
         expense.setExpenseDate(expenseRequest.getExpenseDate());
         if (expenseRequest.getCategoryId() != null) {
-            Category category = categoryRepo.findById(expenseRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+            Category category = categoryRepo.findById(expenseRequest.getCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("category not found with id " + expenseRequest.getCategoryId()));
+
             expense.setCategory(category);
         }
         expenseRepo.save(expense);
@@ -81,7 +89,7 @@ public class ExpenseService {
             expenseRepo.deleteById(expenseId);
             return "Expense has been deleted";
         } else {
-            return "ExpenseId is not found";
+            throw new ResourceNotFoundException("Expense not found with id " + expenseId);
         }
 
     }

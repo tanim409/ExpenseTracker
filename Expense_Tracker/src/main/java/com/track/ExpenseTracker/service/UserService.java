@@ -1,6 +1,7 @@
 package com.track.ExpenseTracker.service;
 
 import com.track.ExpenseTracker.DTO.UserDTO;
+import com.track.ExpenseTracker.Exception.BadRequestException;
 import com.track.ExpenseTracker.entities.User;
 import com.track.ExpenseTracker.repository.UserRepo;
 
@@ -28,7 +29,7 @@ public class UserService {
         User user = new User();
 
         if (userRepo.findByUsername(userDTO.getUsername()).isPresent() || userRepo.findByEmail(userDTO.getEmail()).isPresent()) {
-            throw new RuntimeException("Username or Email is already in use");
+            throw new BadRequestException("Username or Email is already in use");
         }
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());

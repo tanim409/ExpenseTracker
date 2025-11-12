@@ -2,6 +2,8 @@ package com.track.ExpenseTracker.service;
 
 import com.track.ExpenseTracker.DTO.CategoryRequest;
 import com.track.ExpenseTracker.DTO.CategoryResponse;
+import com.track.ExpenseTracker.Exception.ResourceNotFoundException;
+import com.track.ExpenseTracker.Exception.UnauthorizeException;
 import com.track.ExpenseTracker.entities.Category;
 import com.track.ExpenseTracker.entities.User;
 import com.track.ExpenseTracker.repository.CategoryRepo;
@@ -19,7 +21,8 @@ public class CategoryService {
     private final UserRepo userRepo;
     private final ExpenseRepo expenseRepo;
     public CategoryResponse createCategory(CategoryRequest categoryRequest, User us) {
-        User user = userRepo.findById(us.getId()).orElseThrow();
+        User user =
+                userRepo.findById(us.getId()).orElseThrow(()->new ResourceNotFoundException("User not found.. id = "+us.getId()));
         Category category = new Category();
         category.setCategoryName(categoryRequest.getCategoryName());
         category.setIcon(categoryRequest.getIcon());
@@ -36,7 +39,8 @@ public class CategoryService {
     }
 
     public CategoryResponse updateCategory(Integer categoryId, CategoryRequest categoryRequest) {
-        Category category = categoryRepo.findById(categoryId).orElseThrow(()->new RuntimeException("Category Not Found"));
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(()->new ResourceNotFoundException("Category Not Found ...id = "+categoryId));
         category.setCategoryName(categoryRequest.getCategoryName());
         category.setIcon(categoryRequest.getIcon());
         categoryRepo.save(category);
@@ -44,12 +48,13 @@ public class CategoryService {
     }
 
     public String deleteCategory(Integer categoryId) {
-        Category category = categoryRepo.findById(categoryId).orElseThrow(()->new RuntimeException("Category Not Found"));
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(()->new ResourceNotFoundException("Category Not Found...id = "+categoryId));
 
         Integer count = expenseRepo.countByCategoryId(categoryId);
 
         if(count > 0) {
-            throw new RuntimeException("Category Already Exists");
+            throw new UnauthorizeException("Category Already Exists..id "+categoryId);
         }
             categoryRepo.deleteById(categoryId);
             return "Category Deleted Successfully";
